@@ -1,5 +1,6 @@
 # M-HELP-in-5G
 Accepted to : 19th IEEE International Symposium on Network Computing and Applications, 24-27 November 2020
+
 Wireless mobile networks are widely used during large catastrophes such as earthquakes and floods where robust networking systems are indispensable to protect human lives.
 The objective of this paper is to present a self-adaptive emergency call protocol that allows keeping potential victims connected to the core network through the available functional stations, called gNBs in 5G, when a fraction of gNBs in a network area are fully destructed with no access to other gNBs or the core network due to the disaster.
 Nowadays, the density of mobile devices and progress in outband device to device (D2D) communication provide the framework for the extension of both mobile and
