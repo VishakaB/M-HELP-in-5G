@@ -4,7 +4,7 @@
 	         AnyLogic Project File 
 *************************************************	         
 -->
-<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.7.3.202103181427" AlpVersion="8.7.1">
+<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.7.8.202111151814" AlpVersion="8.7.2">
 <Model>
 	<Id>1611404922978</Id>
 	<Name><![CDATA[mhelpv3]]></Name>
@@ -381,6 +381,18 @@
 						<Type><![CDATA[double]]></Type>        
 					</Properties>
 				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1637652822691</Id>
+					<Name><![CDATA[nbcollisions]]></Name>
+					<X>290</X><Y>-130</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[int]]></Type>        
+					</Properties>
+				</Variable>
 				<Variable Class="Parameter">
 					<Id>1611406082121</Id>
 					<Name><![CDATA[requiredEmergCalls]]></Name>
@@ -491,7 +503,7 @@
 						<UnitType><![CDATA[NONE]]></UnitType>
 						<SdArray>false</SdArray>
 						<DefaultValue Class="CodeValue">
-							<Code><![CDATA[100]]></Code>
+							<Code><![CDATA[1000]]></Code>
 						</DefaultValue>
 						<ParameterEditor>
 							<Id>1611406082135</Id>
@@ -1075,6 +1087,36 @@
 					</Properties>
 
 				</Variable>
+				<Variable Class="CollectionVariable">
+					<Id>1637652809843</Id>
+					<Name><![CDATA[collision]]></Name>
+					<X>180</X><Y>-130</Y>
+					<Label><X>20</X><Y>-5</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
+						<CollectionClass><![CDATA[LinkedHashMap]]></CollectionClass>
+						<ElementClass><![CDATA[Double]]></ElementClass>
+						<ValueElementClass><![CDATA[String]]></ValueElementClass>
+					</Properties>
+
+				</Variable>
+				<Variable Class="CollectionVariable">
+					<Id>1637764477582</Id>
+					<Name><![CDATA[reception]]></Name>
+					<X>430</X><Y>-130</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
+						<CollectionClass><![CDATA[LinkedHashMap]]></CollectionClass>
+						<ElementClass><![CDATA[String]]></ElementClass>
+						<ValueElementClass><![CDATA[Integer]]></ValueElementClass>
+					</Properties>
+
+				</Variable>
 			</Variables>
 			<AnalysisData>
     			<DataSet>
@@ -1496,7 +1538,7 @@
 
 			<EmbeddedObjects>
 				<EmbeddedObject>
-					<Id>0</Id>
+					<Id>1637652717897</Id>
 					<Name><![CDATA[phones]]></Name>
 					<X>200</X><Y>-50</Y>
 					<Label><X>10</X><Y>0</Y></Label>
@@ -1603,7 +1645,7 @@
 					</ParameterToDatabaseColumnMapping>
 				</EmbeddedObject>
 				<EmbeddedObject>
-					<Id>0</Id>
+					<Id>1637652717900</Id>
 					<Name><![CDATA[gNBs]]></Name>
 					<X>350</X><Y>-50</Y>
 					<Label><X>10</X><Y>0</Y></Label>
@@ -3495,6 +3537,21 @@ lastsender=message[1];
 if(message[0].equals("emergency")&&!alreadyrelayed.contains("emergency"+";"+ message[1]+";"+message[2] +";"+message[3])) 	
 	{    
 	    waitingTime=min(120,(1-ic)*(1/(locAccuracy+0.1))*(100/min(energyLevel,100)));
+	}
+//System.out.println("reception at"+";"+this.id+";"+time(SECOND)+";"+buffer_tr.size());
+String h = this.id+";"+time(SECOND)+";"+message[1];
+if (main.reception.get(h)==null)
+	{
+		main.reception.put(h,1);//first reception
+	}
+else if(main.reception.get(h)>0)
+	{
+		main.nbcollisions++;
+		
+		double t = 0.000067*main.nbcollisions;
+
+		main.reception.put(h,1+main.reception.get(h));
+		System.out.println("collision"+";"+main.reception.get(h)+";"+t);//second reception
 	}]]></Action>
 						<Timeout Class="CodeUnitValue">
 							<Code><![CDATA[1]]></Code>
@@ -3623,8 +3680,7 @@ if(!inCoverage)
 			main.nbmessages++;//no msgs sent from a phone
 		    main.energy_source_relay_main += transmitE;
 		
-			nbrelayers++;
-				
+			nbrelayers++;				
 		}
 	}
 	
@@ -4738,7 +4794,7 @@ return (i);]]></Body>
 
 			<Presentation>
 				<Text>
-					<Id>0</Id>
+					<Id>1637652717906</Id>
 					<Name><![CDATA[text]]></Name>
 					<X>50</X><Y>30</Y>
 					<Label><X>10</X><Y>0</Y></Label>
@@ -4852,7 +4908,7 @@ return (i);]]></Body>
 
 			<Presentation>
 				<Text>
-					<Id>0</Id>
+					<Id>1637652717926</Id>
 					<Name><![CDATA[text]]></Name>
 					<X>40</X><Y>30</Y>
 					<Label><X>10</X><Y>0</Y></Label>
@@ -4873,7 +4929,7 @@ return (i);]]></Body>
 					<Alignment>LEFT</Alignment>
 				</Text>
 				<Text>
-					<Id>0</Id>
+					<Id>1637652717927</Id>
 					<Name><![CDATA[text1]]></Name>
 					<X>50</X><Y>80</Y>
 					<Label><X>10</X><Y>0</Y></Label>
@@ -4894,7 +4950,7 @@ return (i);]]></Body>
 					<Alignment>LEFT</Alignment>
 				</Text>
 				<Text>
-					<Id>0</Id>
+					<Id>1637652717928</Id>
 					<Name><![CDATA[text2]]></Name>
 					<X>240</X><Y>80</Y>
 					<Label><X>10</X><Y>0</Y></Label>
@@ -4917,7 +4973,7 @@ return (i);]]></Body>
 					<Alignment>RIGHT</Alignment>
 				</Text>
 				<Text>
-					<Id>0</Id>
+					<Id>1637652717929</Id>
 					<Name><![CDATA[text3]]></Name>
 					<X>50</X><Y>110</Y>
 					<Label><X>10</X><Y>0</Y></Label>
@@ -4938,7 +4994,7 @@ return (i);]]></Body>
 					<Alignment>LEFT</Alignment>
 				</Text>
 				<Line>
-					<Id>0</Id>
+					<Id>1637652717930</Id>
 					<Name><![CDATA[line]]></Name>
 					<X>40</X><Y>130</Y>
 					<Label><X>10</X><Y>0</Y></Label>
@@ -4962,7 +5018,7 @@ return (i);]]></Body>
 					<Dz>0</Dz>
 				</Line>
 				<Text>
-					<Id>0</Id>
+					<Id>1637652717931</Id>
 					<Name><![CDATA[text4]]></Name>
 					<X>50</X><Y>150</Y>
 					<Label><X>10</X><Y>0</Y></Label>
@@ -4983,7 +5039,7 @@ return (i);]]></Body>
 					<Alignment>LEFT</Alignment>
 				</Text>
 				<Text>
-					<Id>0</Id>
+					<Id>1637652717932</Id>
 					<Name><![CDATA[text5]]></Name>
 					<X>240</X><Y>150</Y>
 					<Label><X>10</X><Y>0</Y></Label>
@@ -5006,7 +5062,7 @@ return (i);]]></Body>
 					<Alignment>RIGHT</Alignment>
 				</Text>
 				<Rectangle>
-					<Id>0</Id>
+					<Id>1637652717933</Id>
 					<Name><![CDATA[rectangle]]></Name>
 					<X>40</X><Y>170</Y>
 					<Label><X>10</X><Y>0</Y></Label>
@@ -5028,7 +5084,7 @@ return (i);]]></Body>
 					<FillMaterial>null</FillMaterial>
 				</Rectangle>
 				<Text>
-					<Id>0</Id>
+					<Id>1637652717934</Id>
 					<Name><![CDATA[text6]]></Name>
 					<X>50</X><Y>180</Y>
 					<Label><X>10</X><Y>0</Y></Label>
@@ -5049,7 +5105,7 @@ return (i);]]></Body>
 					<Alignment>LEFT</Alignment>
 				</Text>
 				<Text>
-					<Id>0</Id>
+					<Id>1637652717935</Id>
 					<Name><![CDATA[text7]]></Name>
 					<X>240</X><Y>180</Y>
 					<Label><X>10</X><Y>0</Y></Label>
@@ -5072,7 +5128,7 @@ return (i);]]></Body>
 					<Alignment>RIGHT</Alignment>
 				</Text>
 				<Text>
-					<Id>0</Id>
+					<Id>1637652717936</Id>
 					<Name><![CDATA[text8]]></Name>
 					<X>50</X><Y>210</Y>
 					<Label><X>10</X><Y>0</Y></Label>
@@ -5093,7 +5149,7 @@ return (i);]]></Body>
 					<Alignment>LEFT</Alignment>
 				</Text>
 				<Text>
-					<Id>0</Id>
+					<Id>1637652717937</Id>
 					<Name><![CDATA[text9]]></Name>
 					<X>240</X><Y>210</Y>
 					<Label><X>10</X><Y>0</Y></Label>
@@ -5116,7 +5172,7 @@ return (i);]]></Body>
 					<Alignment>RIGHT</Alignment>
 				</Text>
 				<Rectangle>
-					<Id>0</Id>
+					<Id>1637652717938</Id>
 					<Name><![CDATA[rectangle1]]></Name>
 					<X>40</X><Y>230</Y>
 					<Label><X>10</X><Y>0</Y></Label>
@@ -5138,7 +5194,7 @@ return (i);]]></Body>
 					<FillMaterial>null</FillMaterial>
 				</Rectangle>
 				<Text>
-					<Id>0</Id>
+					<Id>1637652717939</Id>
 					<Name><![CDATA[text10]]></Name>
 					<X>50</X><Y>240</Y>
 					<Label><X>10</X><Y>0</Y></Label>
@@ -5159,7 +5215,7 @@ return (i);]]></Body>
 					<Alignment>LEFT</Alignment>
 				</Text>
 				<Text>
-					<Id>0</Id>
+					<Id>1637652717940</Id>
 					<Name><![CDATA[text11]]></Name>
 					<X>240</X><Y>240</Y>
 					<Label><X>10</X><Y>0</Y></Label>
@@ -5182,7 +5238,7 @@ return (i);]]></Body>
 					<Alignment>RIGHT</Alignment>
 				</Text>
 				<Text>
-					<Id>0</Id>
+					<Id>1637652717941</Id>
 					<Name><![CDATA[text12]]></Name>
 					<X>50</X><Y>270</Y>
 					<Label><X>10</X><Y>0</Y></Label>
@@ -5203,7 +5259,7 @@ return (i);]]></Body>
 					<Alignment>LEFT</Alignment>
 				</Text>
 				<Text>
-					<Id>0</Id>
+					<Id>1637652717942</Id>
 					<Name><![CDATA[text13]]></Name>
 					<X>240</X><Y>270</Y>
 					<Label><X>10</X><Y>0</Y></Label>
@@ -5226,7 +5282,7 @@ return (i);]]></Body>
 					<Alignment>RIGHT</Alignment>
 				</Text>
 				<Rectangle>
-					<Id>0</Id>
+					<Id>1637652717943</Id>
 					<Name><![CDATA[rectangle2]]></Name>
 					<X>40</X><Y>290</Y>
 					<Label><X>10</X><Y>0</Y></Label>
@@ -5248,7 +5304,7 @@ return (i);]]></Body>
 					<FillMaterial>null</FillMaterial>
 				</Rectangle>
 				<Text>
-					<Id>0</Id>
+					<Id>1637652717944</Id>
 					<Name><![CDATA[text14]]></Name>
 					<X>50</X><Y>300</Y>
 					<Label><X>10</X><Y>0</Y></Label>
@@ -5269,7 +5325,7 @@ return (i);]]></Body>
 					<Alignment>LEFT</Alignment>
 				</Text>
 				<Text>
-					<Id>0</Id>
+					<Id>1637652717945</Id>
 					<Name><![CDATA[text15]]></Name>
 					<X>240</X><Y>300</Y>
 					<Label><X>10</X><Y>0</Y></Label>
@@ -5292,7 +5348,7 @@ return (i);]]></Body>
 					<Alignment>RIGHT</Alignment>
 				</Text>
 				<Text>
-					<Id>0</Id>
+					<Id>1637652717946</Id>
 					<Name><![CDATA[text16]]></Name>
 					<X>50</X><Y>330</Y>
 					<Label><X>10</X><Y>0</Y></Label>
@@ -5313,7 +5369,7 @@ return (i);]]></Body>
 					<Alignment>LEFT</Alignment>
 				</Text>
 				<Text>
-					<Id>0</Id>
+					<Id>1637652717947</Id>
 					<Name><![CDATA[text17]]></Name>
 					<X>240</X><Y>330</Y>
 					<Label><X>10</X><Y>0</Y></Label>
@@ -5336,7 +5392,7 @@ return (i);]]></Body>
 					<Alignment>RIGHT</Alignment>
 				</Text>
 				<Rectangle>
-					<Id>0</Id>
+					<Id>1637652717948</Id>
 					<Name><![CDATA[rectangle3]]></Name>
 					<X>40</X><Y>350</Y>
 					<Label><X>10</X><Y>0</Y></Label>
@@ -5358,7 +5414,7 @@ return (i);]]></Body>
 					<FillMaterial>null</FillMaterial>
 				</Rectangle>
 				<Text>
-					<Id>0</Id>
+					<Id>1637652717949</Id>
 					<Name><![CDATA[text18]]></Name>
 					<X>50</X><Y>360</Y>
 					<Label><X>10</X><Y>0</Y></Label>
@@ -5379,7 +5435,7 @@ return (i);]]></Body>
 					<Alignment>LEFT</Alignment>
 				</Text>
 				<Text>
-					<Id>0</Id>
+					<Id>1637652717950</Id>
 					<Name><![CDATA[text19]]></Name>
 					<X>240</X><Y>360</Y>
 					<Label><X>10</X><Y>0</Y></Label>
@@ -5402,7 +5458,7 @@ return (i);]]></Body>
 					<Alignment>RIGHT</Alignment>
 				</Text>
 				<Text>
-					<Id>0</Id>
+					<Id>1637652717951</Id>
 					<Name><![CDATA[text20]]></Name>
 					<X>50</X><Y>390</Y>
 					<Label><X>10</X><Y>0</Y></Label>
@@ -5423,7 +5479,7 @@ return (i);]]></Body>
 					<Alignment>LEFT</Alignment>
 				</Text>
 				<Text>
-					<Id>0</Id>
+					<Id>1637652717952</Id>
 					<Name><![CDATA[text21]]></Name>
 					<X>240</X><Y>390</Y>
 					<Label><X>10</X><Y>0</Y></Label>
@@ -5446,7 +5502,7 @@ return (i);]]></Body>
 					<Alignment>RIGHT</Alignment>
 				</Text>
 				<Rectangle>
-					<Id>0</Id>
+					<Id>1637652717953</Id>
 					<Name><![CDATA[rectangle4]]></Name>
 					<X>40</X><Y>410</Y>
 					<Label><X>10</X><Y>0</Y></Label>
@@ -5468,7 +5524,7 @@ return (i);]]></Body>
 					<FillMaterial>null</FillMaterial>
 				</Rectangle>
 				<Text>
-					<Id>0</Id>
+					<Id>1637652717954</Id>
 					<Name><![CDATA[text22]]></Name>
 					<X>50</X><Y>420</Y>
 					<Label><X>10</X><Y>0</Y></Label>
@@ -5489,7 +5545,7 @@ return (i);]]></Body>
 					<Alignment>LEFT</Alignment>
 				</Text>
 				<Text>
-					<Id>0</Id>
+					<Id>1637652717955</Id>
 					<Name><![CDATA[text23]]></Name>
 					<X>240</X><Y>420</Y>
 					<Label><X>10</X><Y>0</Y></Label>
@@ -5512,7 +5568,7 @@ return (i);]]></Body>
 					<Alignment>RIGHT</Alignment>
 				</Text>
 				<Text>
-					<Id>0</Id>
+					<Id>1637652717956</Id>
 					<Name><![CDATA[text24]]></Name>
 					<X>50</X><Y>450</Y>
 					<Label><X>10</X><Y>0</Y></Label>
@@ -5533,7 +5589,7 @@ return (i);]]></Body>
 					<Alignment>LEFT</Alignment>
 				</Text>
 				<Text>
-					<Id>0</Id>
+					<Id>1637652717957</Id>
 					<Name><![CDATA[text25]]></Name>
 					<X>240</X><Y>450</Y>
 					<Label><X>10</X><Y>0</Y></Label>
@@ -5556,7 +5612,7 @@ return (i);]]></Body>
 					<Alignment>RIGHT</Alignment>
 				</Text>
 				<Rectangle>
-					<Id>0</Id>
+					<Id>1637652717958</Id>
 					<Name><![CDATA[rectangle5]]></Name>
 					<X>40</X><Y>470</Y>
 					<Label><X>10</X><Y>0</Y></Label>
@@ -5578,7 +5634,7 @@ return (i);]]></Body>
 					<FillMaterial>null</FillMaterial>
 				</Rectangle>
 				<Text>
-					<Id>0</Id>
+					<Id>1637652717959</Id>
 					<Name><![CDATA[text26]]></Name>
 					<X>50</X><Y>480</Y>
 					<Label><X>10</X><Y>0</Y></Label>
@@ -5599,7 +5655,7 @@ return (i);]]></Body>
 					<Alignment>LEFT</Alignment>
 				</Text>
 				<Text>
-					<Id>0</Id>
+					<Id>1637652717960</Id>
 					<Name><![CDATA[text27]]></Name>
 					<X>240</X><Y>480</Y>
 					<Label><X>10</X><Y>0</Y></Label>
@@ -5622,7 +5678,7 @@ return (i);]]></Body>
 					<Alignment>RIGHT</Alignment>
 				</Text>
 				<Text>
-					<Id>0</Id>
+					<Id>1637652717961</Id>
 					<Name><![CDATA[text28]]></Name>
 					<X>50</X><Y>510</Y>
 					<Label><X>10</X><Y>0</Y></Label>
@@ -5643,7 +5699,7 @@ return (i);]]></Body>
 					<Alignment>LEFT</Alignment>
 				</Text>
 				<Text>
-					<Id>0</Id>
+					<Id>1637652717962</Id>
 					<Name><![CDATA[text29]]></Name>
 					<X>240</X><Y>510</Y>
 					<Label><X>10</X><Y>0</Y></Label>
@@ -5666,7 +5722,7 @@ return (i);]]></Body>
 					<Alignment>RIGHT</Alignment>
 				</Text>
 				<Rectangle>
-					<Id>0</Id>
+					<Id>1637652717963</Id>
 					<Name><![CDATA[rectangle6]]></Name>
 					<X>40</X><Y>530</Y>
 					<Label><X>10</X><Y>0</Y></Label>
@@ -5688,7 +5744,7 @@ return (i);]]></Body>
 					<FillMaterial>null</FillMaterial>
 				</Rectangle>
 				<Text>
-					<Id>0</Id>
+					<Id>1637652717964</Id>
 					<Name><![CDATA[text30]]></Name>
 					<X>50</X><Y>540</Y>
 					<Label><X>10</X><Y>0</Y></Label>
@@ -5709,7 +5765,7 @@ return (i);]]></Body>
 					<Alignment>LEFT</Alignment>
 				</Text>
 				<Text>
-					<Id>0</Id>
+					<Id>1637652717965</Id>
 					<Name><![CDATA[text31]]></Name>
 					<X>240</X><Y>540</Y>
 					<Label><X>10</X><Y>0</Y></Label>
@@ -5732,7 +5788,7 @@ return (i);]]></Body>
 					<Alignment>RIGHT</Alignment>
 				</Text>
 				<Text>
-					<Id>0</Id>
+					<Id>1637652717966</Id>
 					<Name><![CDATA[text32]]></Name>
 					<X>50</X><Y>570</Y>
 					<Label><X>10</X><Y>0</Y></Label>
@@ -5753,7 +5809,7 @@ return (i);]]></Body>
 					<Alignment>LEFT</Alignment>
 				</Text>
 				<Text>
-					<Id>0</Id>
+					<Id>1637652717967</Id>
 					<Name><![CDATA[text33]]></Name>
 					<X>240</X><Y>570</Y>
 					<Label><X>10</X><Y>0</Y></Label>
@@ -5776,7 +5832,7 @@ return (i);]]></Body>
 					<Alignment>RIGHT</Alignment>
 				</Text>
 				<Rectangle>
-					<Id>0</Id>
+					<Id>1637652717968</Id>
 					<Name><![CDATA[rectangle7]]></Name>
 					<X>40</X><Y>590</Y>
 					<Label><X>10</X><Y>0</Y></Label>
@@ -5798,7 +5854,7 @@ return (i);]]></Body>
 					<FillMaterial>null</FillMaterial>
 				</Rectangle>
 				<Text>
-					<Id>0</Id>
+					<Id>1637652717969</Id>
 					<Name><![CDATA[text34]]></Name>
 					<X>50</X><Y>600</Y>
 					<Label><X>10</X><Y>0</Y></Label>
@@ -5819,7 +5875,7 @@ return (i);]]></Body>
 					<Alignment>LEFT</Alignment>
 				</Text>
 				<Text>
-					<Id>0</Id>
+					<Id>1637652717970</Id>
 					<Name><![CDATA[text35]]></Name>
 					<X>240</X><Y>600</Y>
 					<Label><X>10</X><Y>0</Y></Label>
