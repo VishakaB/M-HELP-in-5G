@@ -1,8 +1,10 @@
 # M-HELP-in-5G
 Accepted to : 19th IEEE International Symposium on Network Computing and Applications, 24-27 November 2020
-Link to simulation model in Anylogic cloud : 
+Link to simulation model in Anylogic cloud: 
 
 https://cloud.anylogic.com/model/480075f7-2772-4733-b9c0-806291c7b269?mode=SETTINGS&tab=GENERAL
+
+Find Paper at: https://www.researchgate.net/publication/348262540_M-HELP_-_Multi-Hop_Emergency_Call_Protocol_in_5G
 
 Wireless mobile networks are widely used during large catastrophes such as earthquakes and floods where robust networking systems are indispensable to protect human lives.
 The objective of this paper is to present a self-adaptive emergency call protocol that allows keeping potential victims connected to the core network through the available functional stations, called gNBs in 5G, when a fraction of gNBs in a network area are fully destructed with no access to other gNBs or the core network due to the disaster.
