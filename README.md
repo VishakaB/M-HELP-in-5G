@@ -11,3 +11,6 @@ The objective of this paper is to present a self-adaptive emergency call protoco
 Nowadays, the density of mobile devices and progress in outband device to device (D2D) communication provide the framework for the extension of both mobile and
 network coverage. We propose a novel, 3GPP compatible and completely distributed protocol called M-HELP for emergency call service for 4G/5G enabled mobile networks.
 We assess M-HELP efficiency under various scenarios representing different degrees of network destruction and different emergency call conditions. The tests demonstrate the significant performance of M-HELP in terms of transmission success rate, energy management, latency and control traffic load.
+
+
+![anylogic_phones_state_diagram](https://user-images.githubusercontent.com/42689768/174332260-4811efa2-5e77-421f-9e22-34b23e1b13db.PNG)
